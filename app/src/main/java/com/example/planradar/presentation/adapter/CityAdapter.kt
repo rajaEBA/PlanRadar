@@ -55,13 +55,15 @@ class CityAdapter(
     inner class ViewHolder(private val views: ItemCityBinding) :
         RecyclerView.ViewHolder(views.root) {
         fun bind(position: Int) = views.apply {
-            cities[position].also { it ->
-                it.name?.let {
+            cities[position].also { city ->
+                city.name?.let {
                     nameOfCity.text = it
                     Glide.with(context)
                         .load(R.drawable.baseline_info_24)
                         .error(R.drawable.ic_launcher_background)
                         .into(info)
+
+                    info.setOnClickListener { listener.showHistory(city) }
                 }
             }
         }
@@ -91,5 +93,6 @@ class CityAdapter(
 
     interface ActionClickListener {
         fun showDetails(item:City)
+        fun showHistory(item:City)
     }
 }

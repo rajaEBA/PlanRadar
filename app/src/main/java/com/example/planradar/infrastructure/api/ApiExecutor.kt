@@ -2,7 +2,6 @@ package com.example.planradar.infrastructure.api
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,12 +9,13 @@ import java.util.concurrent.TimeUnit
 
 object ApiExecutor {
 
-    const val PLANRADAR_APIS_ENDPOINT = "https://openweathermap.org/"
+    const val PLANRADAR_APIS_ENDPOINT = "https://api.openweathermap.org/"
 
     private fun getRetrofit(endpointURL: String): Retrofit {
 
         val clientBuilder = OkHttpClient.Builder()
-            .addInterceptor(HeadersInterceptor())
+           // .addInterceptor { apiKeyAsHeader(it) }
+            //.addInterceptor(HeadersInterceptor())
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -31,19 +31,19 @@ object ApiExecutor {
             .build()
     }
 
-    private class HeadersInterceptor: Interceptor {
-
-        override fun intercept(chain: Interceptor.Chain): Response {
-
-            val newRequest = chain.request().newBuilder()
-                .header("appid", "f5cb0b965ea1564c50c6f1b74534d823")
-                .header("accept", "application/json")
-                .header("Content-Type", "application/json")
-                .build()
-
-            return chain.proceed(newRequest)
-        }
-    }
+//    private fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
+//        chain.request()
+//            .newBuilder()
+//            .url(chain.request().url.newBuilder().addQueryParameter("appid", "f5cb0b965ea1564c50c6f1b74534d823").build())
+//            .build()
+//    )
+//
+//    private fun apiKeyAsHeader(it: Interceptor.Chain) = it.proceed(
+//        it.request()
+//            .newBuilder()
+//            .addHeader("appid", "f5cb0b965ea1564c50c6f1b74534d823")
+//            .build()
+//    )
 
     fun createApi(endpointURL: String): PlanRadarApi {
         val retrofit = getRetrofit(endpointURL)

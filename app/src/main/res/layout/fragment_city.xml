@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/info"
+        android:id="@+id/addCity"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_margin="@dimen/spacing_16"
@@ -21,7 +21,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info"
+        app:layout_constraintTop_toBottomOf="@id/addCity"
         tools:itemCount="10"
         tools:layoutManager="GridLayoutManager"
         tools:listitem="@layout/item_city"
