@@ -39,7 +39,7 @@ private fun nounDigitalModule() = module {
         val database = HistoryDatabase.getDatabase(androidApplication())
 
         val localDataSource = WeatherLocalDataSourceImpl(
-            historyDao = database.assetDao()
+            historyDao = database.historyDao()
         )
 
         PlanRadarRepositoryImpl(

@@ -44,7 +44,7 @@ class DetailsFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.assetsViewState.collect(::renderStates)
+                viewModel.detailsViewState.collect(::renderStates)
             }
         }
         val city = arguments?.getString(CityFragment.CITY_NAME_KEY)

@@ -39,7 +39,7 @@ class CityAdapter(
     }
 
     fun submitUpdate(update: List<City>) {
-        val callBack = AssetDiffCallback(cities, update)
+        val callBack = CityDiffCallback(cities, update)
         val diffResult = DiffUtil.calculateDiff(callBack)
         cities.clear()
         cities.addAll(update)
@@ -68,24 +68,24 @@ class CityAdapter(
         }
     }
 
-    class AssetDiffCallback(
-        private val oldAssets: List<City>,
-        private val newAssets: List<City>
+    class CityDiffCallback(
+        private val oldCities: List<City>,
+        private val newCities: List<City>
     ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
-            return oldAssets.size
+            return oldCities.size
         }
 
         override fun getNewListSize(): Int {
-            return newAssets.size
+            return newCities.size
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldAssets[oldItemPosition] == newAssets[newItemPosition]
+            return oldCities[oldItemPosition] == newCities[newItemPosition]
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldAssets[oldItemPosition].name == newAssets[newItemPosition].name
+            return oldCities[oldItemPosition].name == newCities[newItemPosition].name
         }
 
     }

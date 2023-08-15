@@ -17,7 +17,6 @@ class PlanRadarRepositoryImpl(
             val remoteWeather = remoteDataSource.getWeatherOfCity(city)
             val weather = remoteWeather.toWeather()
 
-
             insertToDatabase(weather)
 
             Result.Success(weather)

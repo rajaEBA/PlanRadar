@@ -38,7 +38,7 @@ class HistoryAdapter(
     }
 
     fun submitUpdate(update: List<WeatherResponse>) {
-        val callBack = AssetDiffCallback(histories, update)
+        val callBack = HistoryDiffCallback(histories, update)
         val diffResult = DiffUtil.calculateDiff(callBack)
         histories.clear()
         histories.addAll(update)
@@ -59,24 +59,24 @@ class HistoryAdapter(
         }
     }
 
-    class AssetDiffCallback(
-        private val oldAssets: List<WeatherResponse>,
-        private val newAssets: List<WeatherResponse>
+    class HistoryDiffCallback(
+        private val oldHistories: List<WeatherResponse>,
+        private val newHistories: List<WeatherResponse>
     ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
-            return oldAssets.size
+            return oldHistories.size
         }
 
         override fun getNewListSize(): Int {
-            return newAssets.size
+            return newHistories.size
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldAssets[oldItemPosition] == newAssets[newItemPosition]
+            return oldHistories[oldItemPosition] == newHistories[newItemPosition]
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldAssets[oldItemPosition].timezone == newAssets[newItemPosition].timezone
+            return oldHistories[oldItemPosition].timezone == newHistories[newItemPosition].timezone
         }
 
     }
