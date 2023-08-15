@@ -17,9 +17,9 @@ class DetailsViewModel(
         MutableStateFlow(DetailsState.Loading)
     val assetsViewState: StateFlow<DetailsState> = mutableViewState
 
-    fun getWeather(city: String, appId: String) {
+    fun getWeather(city: String) {
         viewModelScope.launch {
-            when (val result = weather.invoke(city, appId)) {
+            when (val result = weather.invoke(city)) {
                 is Result.Success -> {
                     mutableViewState.value = DetailsState.ShowWeather(result.data)
                 }

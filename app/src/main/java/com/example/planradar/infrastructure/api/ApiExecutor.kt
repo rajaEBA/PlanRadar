@@ -14,8 +14,7 @@ object ApiExecutor {
     private fun getRetrofit(endpointURL: String): Retrofit {
 
         val clientBuilder = OkHttpClient.Builder()
-           // .addInterceptor { apiKeyAsHeader(it) }
-            //.addInterceptor(HeadersInterceptor())
+            .addInterceptor { apiKeyAsQuery(it) }
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().apply {
@@ -31,19 +30,12 @@ object ApiExecutor {
             .build()
     }
 
-//    private fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
-//        chain.request()
-//            .newBuilder()
-//            .url(chain.request().url.newBuilder().addQueryParameter("appid", "f5cb0b965ea1564c50c6f1b74534d823").build())
-//            .build()
-//    )
-//
-//    private fun apiKeyAsHeader(it: Interceptor.Chain) = it.proceed(
-//        it.request()
-//            .newBuilder()
-//            .addHeader("appid", "f5cb0b965ea1564c50c6f1b74534d823")
-//            .build()
-//    )
+    private fun apiKeyAsQuery(chain: Interceptor.Chain) = chain.proceed(
+        chain.request()
+            .newBuilder()
+            .url(chain.request().url.newBuilder().addQueryParameter("appid", "f5cb0b965ea1564c50c6f1b74534d823").build())
+            .build()
+    )
 
     fun createApi(endpointURL: String): PlanRadarApi {
         val retrofit = getRetrofit(endpointURL)

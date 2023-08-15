@@ -12,9 +12,9 @@ class PlanRadarRepositoryImpl(
     private val networkManager: NetworkManager,
 ) : PlanRadarRepository {
 
-    override suspend fun getWeather(city:String, appId:String): Result<WeatherResponse> {
+    override suspend fun getWeather(city:String): Result<WeatherResponse> {
         return if (networkManager.hasConnection()) {
-            val remoteWeather = remoteDataSource.getWeatherOfCity(city,appId)
+            val remoteWeather = remoteDataSource.getWeatherOfCity(city)
             val weather = remoteWeather.toWeather()
 
 

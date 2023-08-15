@@ -5,7 +5,7 @@ import com.example.planradar.domain.common.Result
 
 interface PlanRadarRepository {
 
-    suspend fun getWeather(city:String, appId:String): Result<WeatherResponse>
+    suspend fun getWeather(city:String): Result<WeatherResponse>
 
     suspend fun getHistory(city:String): Result<List<WeatherResponse>>
 }

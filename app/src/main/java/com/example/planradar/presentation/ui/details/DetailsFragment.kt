@@ -50,7 +50,7 @@ class DetailsFragment : Fragment() {
         val city = arguments?.getString(CityFragment.CITY_NAME_KEY)
         city?.let {
 
-            viewModel.getWeather(city, getString(R.string.api_key))
+            viewModel.getWeather(city)
         } ?: Log.e("DetailsFragment", "There is no value for city")
     }
 
