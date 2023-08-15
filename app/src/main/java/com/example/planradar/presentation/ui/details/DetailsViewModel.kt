@@ -4,29 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planradar.domain.common.Result
 import com.example.planradar.domain.model.WeatherResponse
-import com.example.planradar.domain.usecase.GetCityWeatherIcon
-import com.example.planradar.domain.usecase.GetCityWeatherUseCase
+import com.example.planradar.domain.usecase.GetHistoryUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    private val weather: GetCityWeatherUseCase,
-    private val icon: GetCityWeatherIcon,
+    private val weather: GetHistoryUseCase,
 ): ViewModel() {
 
     private val mutableViewState: MutableStateFlow<DetailsState> =
         MutableStateFlow(DetailsState.Loading)
     val assetsViewState: StateFlow<DetailsState> = mutableViewState
 
-    private lateinit var weatherInfo: WeatherResponse
-
     fun getWeather(city: String, appId: String) {
         viewModelScope.launch {
             when (val result = weather.invoke(city, appId)) {
                 is Result.Success -> {
-                    weatherInfo = result.data
-//                    getWeatherIcon(weatherInfo.weather[0].icon)
+                    mutableViewState.value = DetailsState.ShowWeather(result.data)
                 }
                 is Result.Error -> {
                     mutableViewState.value = DetailsState.ShowWeatherFailed("Failed loading weather data.")
@@ -35,17 +30,6 @@ class DetailsViewModel(
             }
         }
 
-    }
-
-    private fun getWeatherIcon(iconId: String) {
-        viewModelScope.launch {
-            when (val result = icon.invoke(iconId)) {
-                is Result.Success -> {
-                    mutableViewState.value = DetailsState.ShowWeather(weatherInfo)
-                }
-                is Result.Error -> {}
-            }
-        }
     }
 
     sealed class DetailsState {

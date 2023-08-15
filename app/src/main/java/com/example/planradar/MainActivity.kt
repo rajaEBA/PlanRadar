@@ -9,13 +9,17 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.NavController
 import androidx.navigation.ui.NavigationUI
 import com.example.planradar.databinding.ActivityMainBinding
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, null)
 
     }
@@ -53,4 +57,18 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
+
+//    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.CityFragment -> {
+//                navController.navigate(R.id.CityFragment)
+//                true
+//            }
+//            R.id.DetailsFragment -> {
+//                navController.navigate(R.id.DetailsFragment)
+//                true
+//            }
+//            else -> false
+//        }
+//    }
 }

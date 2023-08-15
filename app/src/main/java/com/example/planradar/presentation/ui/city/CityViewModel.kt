@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class CityViewModel: ViewModel() {
 
-    private val mutableViewState = MutableSharedFlow<CityState>()
+    private val mutableViewState = MutableSharedFlow<CityState>(replay = 0)
     val cityViewState: SharedFlow<CityState> = mutableViewState
 
     fun onEvent(event: Event) {

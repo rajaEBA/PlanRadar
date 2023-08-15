@@ -6,26 +6,31 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/spacing_16">
 
-    <ImageView
-        android:id="@+id/addCity"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_margin="@dimen/spacing_16"
+    <TextView
+        android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_4"
+        android:gravity="center"
+        android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_add_circle_outline_24" />
+        tools:text="CITY NAME" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addCity"
-        tools:itemCount="10"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:itemCount="8"
         tools:layoutManager="GridLayoutManager"
-        tools:listitem="@layout/item_city"
+        tools:listitem="@layout/item_history"
         tools:spanCount="1" />
 
     <ProgressBar
@@ -37,4 +42,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/done"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_4"
+        android:gravity="start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="DONE" />
 </androidx.constraintlayout.widget.ConstraintLayout>

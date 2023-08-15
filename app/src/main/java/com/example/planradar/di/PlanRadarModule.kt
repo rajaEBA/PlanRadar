@@ -1,8 +1,8 @@
 package com.example.planradar.di
 
 import com.example.planradar.domain.outputport.PlanRadarRepository
-import com.example.planradar.domain.usecase.GetCityWeatherIcon
 import com.example.planradar.domain.usecase.GetCityWeatherUseCase
+import com.example.planradar.domain.usecase.GetHistoryUseCase
 import com.example.planradar.infrastructure.api.ApiExecutor
 import com.example.planradar.infrastructure.api.ApiExecutor.PLANRADAR_APIS_ENDPOINT
 import com.example.planradar.infrastructure.repositories.PlanRadarRepositoryImpl
@@ -34,6 +34,7 @@ private fun nounDigitalModule() = module {
     single<PlanRadarRepository>(createdAtStart = true) {
         PlanRadarRepositoryImpl(
             remoteDataSource = get(),
+            localDataSource = get(),
             networkManager = get(),
         )
     }
@@ -45,7 +46,7 @@ private fun nounDigitalModule() = module {
     }
 
     factory {
-        GetCityWeatherIcon(
+        GetHistoryUseCase(
             repository = get()
         )
     }
@@ -57,7 +58,6 @@ private fun nounDigitalModule() = module {
     viewModel {
         DetailsViewModel(
             weather = get(),
-            icon = get()
         )
     }
 }

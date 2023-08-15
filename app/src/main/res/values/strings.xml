@@ -9,4 +9,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="time_label">Weather information for %1$s received on %2$s</string>
+    <string name="description_label">Description: %1$s</string>
+    <string name="temp_label">Temp: %1$s C</string>
+    <string name="humidity_label">Humidity: %1$s</string>
+    <string name="windspeed_label">Windspeed: %1$s kmh</string>
 </resources>

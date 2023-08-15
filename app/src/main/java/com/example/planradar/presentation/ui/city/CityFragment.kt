@@ -30,8 +30,9 @@ import kotlin.collections.ArrayList
  */
 class CityFragment : Fragment() {
 
-    private var _binding: FragmentCityBinding? = null
-    private val binding get() = _binding!!
+    private val rootView: FragmentCityBinding by lazy {
+        FragmentCityBinding.inflate(layoutInflater)
+    }
 
     private val viewModel: CityViewModel by viewModel()
 
@@ -43,20 +44,20 @@ class CityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentCityBinding.inflate(inflater, container, false)
-        return binding.root
+       // _binding = FragmentCityBinding.inflate(inflater, container, false)
+        return rootView.root
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
 //        binding.in.setOnClickListener {
 //            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 //        }
         cityAdapter = CityAdapter(requireContext(), object : CityAdapter.ActionClickListener {
             override fun showDetails(item: City) {
-                binding.indicator.visibility = View.INVISIBLE
+                rootView.indicator.visibility = View.INVISIBLE
                 viewModel.onEvent(CityViewModel.Event.ShowDetails(item))
             }
 
@@ -78,9 +79,9 @@ class CityFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 cityAdapter.deleteItem(viewHolder.adapterPosition)
             }
-        }).attachToRecyclerView(binding.recyclerView)
+        }).attachToRecyclerView(rootView.recyclerView)
 
-        binding.recyclerView.apply {
+        rootView.recyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), 1)
             adapter = cityAdapter
         }
@@ -98,14 +99,9 @@ class CityFragment : Fragment() {
                 viewModel.cityViewState.collect(::renderStates)
             }
         }
-        binding.addCity.setOnClickListener {
+        rootView.addCity.setOnClickListener {
             viewModel.onEvent(CityViewModel.Event.AddCity(getRandomCity()))
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun renderStates(state: CityViewModel.CityState) {

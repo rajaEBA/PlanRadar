@@ -4,10 +4,12 @@ import com.example.planradar.domain.model.WeatherResponse
 import com.example.planradar.domain.outputport.PlanRadarRepository
 import com.example.planradar.infrastructure.utils.NetworkManager
 import com.example.planradar.domain.common.Result
+import com.example.planradar.domain.model.History
 import com.example.planradar.infrastructure.mappers.toWeather
 
 class PlanRadarRepositoryImpl(
     private val remoteDataSource: WeatherRemoteDataSource,
+    private val localDataSource: WeatherLocalDataSource,
     private val networkManager: NetworkManager,
 ) : PlanRadarRepository {
 
@@ -22,12 +24,11 @@ class PlanRadarRepositoryImpl(
         }
     }
 
-    override suspend fun getWeatherIcon(cityId: String): Result<String> {
-        return if (networkManager.hasConnection()) {
-            val icon = remoteDataSource.getWeatherIcon(cityId)
-            Result.Success(icon)
-        } else {
-            Result.Error(Exception("No Network Connectivity"))
+    override suspend fun getHistory(): Result<List<History>> {
+        return try {
+            Result.Success(localDataSource.getAllHistories())
+        } catch (e: Exception) {
+            Result.Success(emptyList())
         }
     }
 }

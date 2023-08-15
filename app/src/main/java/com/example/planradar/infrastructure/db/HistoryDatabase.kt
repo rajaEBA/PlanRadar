@@ -5,24 +5,24 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [AssetEntity::class], version = 1, exportSchema = false)
-abstract class AssetsDatabase : RoomDatabase() {
+@Database(entities = [HistoryEntity::class], version = 1, exportSchema = false)
+abstract class HistoryDatabase : RoomDatabase() {
 
-    abstract fun assetDao(): AssetDao
+    abstract fun assetDao(): HistoryDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AssetsDatabase? = null
+        private var INSTANCE: HistoryDatabase? = null
 
-        fun getDatabase(appContext: Context): AssetsDatabase {
+        fun getDatabase(appContext: Context): HistoryDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
             }
             synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    appContext, AssetsDatabase::class.java,
-                    AssetsDatabase::class.simpleName
+                    appContext, HistoryDatabase::class.java,
+                    HistoryDatabase::class.simpleName
                 ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance

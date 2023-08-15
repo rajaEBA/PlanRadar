@@ -11,9 +11,7 @@ class WeatherRemoteDataSourceImpl(
 
     override suspend fun getWeatherOfCity(city:String, appId: String): WeatherResponseEntity {
         return try {
-            val data = service.getWeather("London",appId)
-            Log.i("data-----",data.body().toString())
-            val response = data
+            val response = service.getWeather(city,appId)
             val body = response.body()
             if (response.isSuccessful && body != null) {
                 body
