@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,7 +22,6 @@ import com.example.planradar.presentation.adapter.CityAdapter
 import com.example.planradar.presentation.utils.removeDuplicates
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -44,17 +43,12 @@ class CityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-       // _binding = FragmentCityBinding.inflate(inflater, container, false)
         return rootView.root
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        binding.in.setOnClickListener {
-//            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-//        }
         cityAdapter = CityAdapter(requireContext(), object : CityAdapter.ActionClickListener {
             override fun showDetails(item: City) {
                 rootView.indicator.visibility = View.INVISIBLE
@@ -62,7 +56,7 @@ class CityFragment : Fragment() {
             }
 
             override fun showHistory(item: City) {
-                Toast.makeText(requireContext(),item.name, Toast.LENGTH_SHORT).show()
+                viewModel.onEvent(CityViewModel.Event.ShowHistory(item))
             }
 
         })
@@ -100,8 +94,19 @@ class CityFragment : Fragment() {
             }
         }
         rootView.addCity.setOnClickListener {
-            viewModel.onEvent(CityViewModel.Event.AddCity(getRandomCity()))
+            rootView.inputCity.visibility = View.VISIBLE
         }
+
+        rootView.inputCity.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.onEvent(CityViewModel.Event.AddCity(query))
+                return true
+            }
+
+            override fun onQueryTextChange(text: String): Boolean {
+                return true
+            }
+        })
     }
 
     private fun renderStates(state: CityViewModel.CityState) {
@@ -111,9 +116,11 @@ class CityFragment : Fragment() {
                 cityAdapter.submitUpdate(cityList.removeDuplicates())
             }
             is CityViewModel.CityState.DetailsLoaded -> {
-                state.item.name?.let { loadDetailFragment(R.id.DetailsFragment, it) }
+                state.item.name?.let { loadFragment(R.id.DetailsFragment, it) }
             }
-
+            is CityViewModel.CityState.HistoryLoaded -> {
+                state.item.name?.let { loadFragment(R.id.HistoryFragment, it) }
+            }
         }
     }
 
@@ -121,17 +128,10 @@ class CityFragment : Fragment() {
         return requireView().findNavController()
     }
 
-    private fun loadDetailFragment(@IdRes viewId: Int, city: String) {
+    private fun loadFragment(@IdRes viewId: Int, city: String) {
         val bundle = Bundle()
         bundle.putString(CITY_NAME_KEY, city)
         getNavController().navigate(viewId, bundle)
-    }
-
-    private fun getRandomCity(): String {
-        val cities = listOf("New York City", "Tehran", "Ahvaz", "Tokyo", "Sydney")
-        val random = Random(System.currentTimeMillis())
-        val index = random.nextInt(cities.size)
-        return cities[index]
     }
 
     companion object {

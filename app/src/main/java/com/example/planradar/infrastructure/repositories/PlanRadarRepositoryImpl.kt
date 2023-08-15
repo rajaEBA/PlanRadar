@@ -4,7 +4,6 @@ import com.example.planradar.domain.model.WeatherResponse
 import com.example.planradar.domain.outputport.PlanRadarRepository
 import com.example.planradar.infrastructure.utils.NetworkManager
 import com.example.planradar.domain.common.Result
-import com.example.planradar.domain.model.History
 import com.example.planradar.infrastructure.mappers.toWeather
 
 class PlanRadarRepositoryImpl(
@@ -17,18 +16,26 @@ class PlanRadarRepositoryImpl(
         return if (networkManager.hasConnection()) {
             val remoteWeather = remoteDataSource.getWeatherOfCity(city,appId)
             val weather = remoteWeather.toWeather()
-            Result.Success(weather)
 
+
+            insertToDatabase(weather)
+
+            Result.Success(weather)
         } else {
             Result.Error(Exception("No Network Connectivity"))
         }
     }
 
-    override suspend fun getHistory(): Result<List<History>> {
+    override suspend fun getHistory(city:String): Result<List<WeatherResponse>> {
         return try {
-            Result.Success(localDataSource.getAllHistories())
+            Result.Success(localDataSource.getAllHistories(city))
         } catch (e: Exception) {
             Result.Success(emptyList())
         }
     }
+
+    private suspend fun insertToDatabase(item: WeatherResponse) {
+        localDataSource.addHistory(item)
+    }
+
 }

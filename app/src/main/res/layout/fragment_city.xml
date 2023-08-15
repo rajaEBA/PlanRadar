@@ -8,12 +8,24 @@
 
     <ImageView
         android:id="@+id/addCity"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/spacing_24"
+        android:layout_height="@dimen/spacing_24"
         android:layout_margin="@dimen/spacing_16"
+        app:layout_constraintBottom_toBottomOf="@+id/inputCity"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/inputCity"
         app:srcCompat="@drawable/baseline_add_circle_outline_24" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/inputCity"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.67" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -22,7 +34,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addCity"
+        app:layout_constraintTop_toBottomOf="@id/inputCity"
         tools:itemCount="10"
         tools:layoutManager="GridLayoutManager"
         tools:listitem="@layout/item_city"

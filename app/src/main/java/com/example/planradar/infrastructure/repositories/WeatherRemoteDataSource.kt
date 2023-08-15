@@ -1,6 +1,5 @@
 package com.example.planradar.infrastructure.repositories
 
-import android.util.Log
 import com.example.planradar.infrastructure.api.PlanRadarApi
 import com.example.planradar.infrastructure.api.WeatherResponseEntity
 import okio.IOException

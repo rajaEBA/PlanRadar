@@ -3,7 +3,8 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="city_fragment_label">City Fragment</string>
-    <string name="details_fragment_label">Second Fragment</string>
+    <string name="details_fragment_label">Details Fragment</string>
+    <string name="history_fragment_label">History Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -15,4 +16,9 @@
     <string name="temp_label">Temp: %1$s C</string>
     <string name="humidity_label">Humidity: %1$s</string>
     <string name="windspeed_label">Windspeed: %1$s kmh</string>
+
+    <string name="historical">Historical</string>
+    <string name="done">Done</string>
+
+    <string name="concat_strings">%1$s  %2$s</string>
 </resources>

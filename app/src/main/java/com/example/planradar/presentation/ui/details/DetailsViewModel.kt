@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planradar.domain.common.Result
 import com.example.planradar.domain.model.WeatherResponse
-import com.example.planradar.domain.usecase.GetHistoryUseCase
+import com.example.planradar.domain.usecase.GetCityWeatherUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(
-    private val weather: GetHistoryUseCase,
+    private val weather: GetCityWeatherUseCase,
 ): ViewModel() {
 
     private val mutableViewState: MutableStateFlow<DetailsState> =

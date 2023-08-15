@@ -11,9 +11,6 @@
         android:label="@string/city_fragment_label"
         tools:layout="@layout/fragment_city">
 
-<!--        <action-->
-<!--            android:id="@+id/action_FirstFragment_to_SecondFragment"-->
-<!--            app:destination="@id/SecondFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/DetailsFragment"
@@ -21,8 +18,13 @@
         android:label="@string/details_fragment_label"
         tools:layout="@layout/fragment_details">
 
-<!--        <action-->
-<!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
-<!--            app:destination="@id/FirstFragment" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/HistoryFragment"
+        android:name="com.example.planradar.presentation.ui.history.HistoryFragment"
+        android:label="@string/history_fragment_label"
+        tools:layout="@layout/fragment_history">
+
     </fragment>
 </navigation>

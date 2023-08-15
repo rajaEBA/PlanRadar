@@ -13,3 +13,7 @@ fun <T> List<T>.removeDuplicates(): List<T> {
     }
     return newList
 }
+
+fun Double.kelvinToCelsius(): Int {
+    return (this - 273.15).toInt()
+}

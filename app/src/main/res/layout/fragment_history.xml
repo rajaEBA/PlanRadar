@@ -8,10 +8,10 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/TextAppearance.AppCompat.Caption"
-        android:layout_width="0dp"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_4"
+        android:layout_margin="@dimen/spacing_8"
         android:gravity="center"
         android:textSize="@dimen/text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
-        tools:itemCount="8"
+        tools:itemCount="10"
         tools:layoutManager="GridLayoutManager"
         tools:listitem="@layout/item_history"
         tools:spanCount="1" />
@@ -45,11 +45,13 @@
 
     <TextView
         android:id="@+id/done"
+        style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_4"
+        android:layout_margin="@dimen/spacing_8"
         android:gravity="start"
+        app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title"
         tools:text="DONE" />
 </androidx.constraintlayout.widget.ConstraintLayout>

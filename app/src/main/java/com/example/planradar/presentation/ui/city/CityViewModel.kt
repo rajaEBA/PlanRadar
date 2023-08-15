@@ -21,17 +21,22 @@ class CityViewModel: ViewModel() {
                 is Event.ShowDetails -> {
                     mutableViewState.emit(CityState.DetailsLoaded(event.item))
                 }
+                is Event.ShowHistory -> {
+                    mutableViewState.emit(CityState.HistoryLoaded(event.item))
+                }
             }
         }
     }
 
     sealed class Event {
         data class ShowDetails(val item: City) : Event()
+        data class ShowHistory(val item: City) : Event()
         data class AddCity(val item: String) : Event()
     }
 
     sealed class CityState {
         data class DetailsLoaded(val item: City) : CityState()
+        data class HistoryLoaded(val item: City) : CityState()
         data class CityAdded(val city: String) : CityState()
     }
 }

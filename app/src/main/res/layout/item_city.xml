@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/info"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/spacing_24"
+            android:layout_height="@dimen/spacing_24"
             app:layout_constraintBottom_toBottomOf="@id/nameOfCity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/nameOfCity"

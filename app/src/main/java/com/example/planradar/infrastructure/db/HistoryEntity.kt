@@ -6,8 +6,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "history")
 data class HistoryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
-    val time: String? = null,
-    val temp: String? = null,
-    val description: String? = null
+    val id: Long = 0,
+    val icon: String,
+    val description: String,
+    val temp: Double,
+    val windSpeed: Double,
+    val humidity: Int,
+    val timezone: String,
+    val name: String,
 )

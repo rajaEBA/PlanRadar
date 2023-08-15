@@ -5,21 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.planradar.R
-import com.example.planradar.databinding.ItemCityBinding
 import com.example.planradar.databinding.ItemHistoryBinding
-import com.example.planradar.domain.model.City
-import com.example.planradar.domain.model.History
+import com.example.planradar.domain.model.WeatherResponse
+import com.example.planradar.presentation.utils.kelvinToCelsius
 
 class HistoryAdapter(
     private val context: Context,
-    private val listener: CityAdapter.ActionClickListener
-) : RecyclerView.Adapter<CityAdapter.ViewHolder>() {
+    private val listener: ActionClickListener
+) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
-    private val histories: ArrayList<History> = arrayListOf()
+    private val histories: ArrayList<WeatherResponse> = arrayListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryAdapter.ViewHolder {
         val views = ItemHistoryBinding.inflate(
             LayoutInflater.from(context),
             parent,
@@ -28,7 +25,7 @@ class HistoryAdapter(
         return ViewHolder(views)
     }
 
-    override fun onBindViewHolder(holder: CityAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HistoryAdapter.ViewHolder, position: Int) {
         val item = histories[position]
         holder.itemView.setOnClickListener {
             listener.showDetails(item)
@@ -40,27 +37,31 @@ class HistoryAdapter(
         return histories.size
     }
 
+    fun submitUpdate(update: List<WeatherResponse>) {
+        val callBack = AssetDiffCallback(histories, update)
+        val diffResult = DiffUtil.calculateDiff(callBack)
+        histories.clear()
+        histories.addAll(update)
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     inner class ViewHolder(private val views: ItemHistoryBinding) :
         RecyclerView.ViewHolder(views.root) {
         fun bind(position: Int) = views.apply {
-            histories[position].also { history ->
-                city.name?.let {
-                    nameOfCity.text = it
-                    Glide.with(context)
-                        .load(R.drawable.baseline_info_24)
-                        .error(R.drawable.ic_launcher_background)
-                        .into(info)
+            histories[position].also { weather ->
+                weather.let {
+                    time.text = weather.timezone
+                    description.text = weather.description + ", " + weather.temp.kelvinToCelsius() + "C"
 
-                    info.setOnClickListener { listener.showHistory(history) }
+                    info.setOnClickListener { listener.showDetails(weather) }
                 }
             }
         }
     }
 
     class AssetDiffCallback(
-        private val oldAssets: List<City>,
-        private val newAssets: List<City>
+        private val oldAssets: List<WeatherResponse>,
+        private val newAssets: List<WeatherResponse>
     ) : DiffUtil.Callback() {
         override fun getOldListSize(): Int {
             return oldAssets.size
@@ -75,12 +76,12 @@ class HistoryAdapter(
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldAssets[oldItemPosition].name == newAssets[newItemPosition].name
+            return oldAssets[oldItemPosition].timezone == newAssets[newItemPosition].timezone
         }
 
     }
 
     interface ActionClickListener {
-        fun showDetails(item: History)
+        fun showDetails(item: WeatherResponse)
     }
 }
