@@ -20,10 +20,10 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 fun planRadarDependencies(): List<Module> {
-    return listOf(nounDigitalModule())
+    return listOf(weatherModule())
 }
 
-private fun nounDigitalModule() = module {
+private fun weatherModule() = module {
 
     val httpClient = ApiExecutor.createApi(PLANRADAR_APIS_ENDPOINT)
     single<WeatherRemoteDataSource> {

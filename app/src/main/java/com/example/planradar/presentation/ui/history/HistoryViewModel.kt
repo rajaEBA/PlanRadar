@@ -13,8 +13,7 @@ class HistoryViewModel(
     private val history: GetHistoryUseCase
 ) : ViewModel() {
 
-    private val mutableViewState: MutableStateFlow<HistoryState> =
-        MutableStateFlow(HistoryState.Loading)
+    private val mutableViewState: MutableStateFlow<HistoryState> = MutableStateFlow(HistoryState.Loading)
     val historyViewState: StateFlow<HistoryState> = mutableViewState
 
     fun getAllHistory(city: String) {

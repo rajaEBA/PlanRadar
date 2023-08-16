@@ -13,8 +13,7 @@ class DetailsViewModel(
     private val weather: GetCityWeatherUseCase,
 ): ViewModel() {
 
-    private val mutableViewState: MutableStateFlow<DetailsState> =
-        MutableStateFlow(DetailsState.Loading)
+    private val mutableViewState: MutableStateFlow<DetailsState> = MutableStateFlow(DetailsState.Loading)
     val detailsViewState: StateFlow<DetailsState> = mutableViewState
 
     fun getWeather(city: String) {
