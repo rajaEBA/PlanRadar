@@ -1,7 +1,7 @@
 package com.example.planradar
 
 import android.app.Application
-import com.example.planradar.di.PlanRadarDependencies
+import com.example.planradar.di.planRadarDependencies
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -20,6 +20,6 @@ class PlanRadarApplication : Application() {
     }
 
     private fun koinModuleList() = ArrayList<Module>().apply {
-        addAll(PlanRadarDependencies())
+        addAll(planRadarDependencies())
     }
 }

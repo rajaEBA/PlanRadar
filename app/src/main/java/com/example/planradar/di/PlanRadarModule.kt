@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-fun PlanRadarDependencies(): List<Module> {
+fun planRadarDependencies(): List<Module> {
     return listOf(nounDigitalModule())
 }
 
