@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
@@ -99,7 +100,13 @@ class CityFragment : Fragment() {
 
         rootView.inputCity.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.onEvent(CityViewModel.Event.AddCity(query))
+                val cityName = query.filter { it.isDigit() }
+                if (cityName.isNotEmpty()) {
+                    Toast.makeText(requireContext(), "should be string", Toast.LENGTH_SHORT).show()
+                } else {
+                    viewModel.onEvent(CityViewModel.Event.AddCity(query))
+                }
+
                 return true
             }
 

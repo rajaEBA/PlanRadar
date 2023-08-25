@@ -12,14 +12,18 @@ class PlanRadarRepositoryImpl(
     private val networkManager: NetworkManager,
 ) : PlanRadarRepository {
 
-    override suspend fun getWeather(city:String): Result<WeatherResponse> {
+    override suspend fun getWeather(city: String): Result<WeatherResponse> {
         return if (networkManager.hasConnection()) {
-            val remoteWeather = remoteDataSource.getWeatherOfCity(city)
-            val weather = remoteWeather.toWeather()
+            try {
+                val remoteWeather = remoteDataSource.getWeatherOfCity(city)
+                val weather = remoteWeather.toWeather()
+                insertToDatabase(weather)
 
-            insertToDatabase(weather)
+                Result.Success(weather)
+            } catch (e: Exception) {
+                Result.Error(Exception("No valid data"))
+            }
 
-            Result.Success(weather)
         } else {
             Result.Error(Exception("No Network Connectivity"))
         }

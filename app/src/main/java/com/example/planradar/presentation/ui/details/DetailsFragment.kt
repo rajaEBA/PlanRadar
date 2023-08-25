@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -65,6 +66,7 @@ class DetailsFragment : Fragment() {
             }
             is DetailsViewModel.DetailsState.ShowWeatherFailed -> {
                 rootView.indicator.visibility = View.INVISIBLE
+                Toast.makeText(requireContext(),state.error, Toast.LENGTH_SHORT).show()
                 state.error
             }
         }
